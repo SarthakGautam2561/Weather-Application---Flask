@@ -3,36 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Weather and AQI App - Sarthak Gautam</title>
+    <title>Weather and Air Quality - Sarthak Gautam</title>
 </head>
 <body>
-    <h1>Weather and AQI Application - Sarthak</h1>
+    <h1>Weather and Air Quality Information - Sarthak</h1>
+
     <form method="POST">
-        <label for="city">Enter City Name:</label>
+        <label for="city">Enter City: </label>
         <input type="text" name="city" id="city" required>
-        <button type="submit">Submit</button>
+        <button type="submit">Get Weather</button>
     </form>
 
-    {% if data and not data.error %}
-        <h2>Weather in {{ data.city }}</h2>
-        <p><strong>Weather:</strong> {{ data.weather }}</p>
-        <p><strong>Temperature:</strong> {{ data.temperature }} °C</p>
-        <p><strong>Humidity:</strong> {{ data.humidity }}%</p>
-        <p><strong>Wind Speed:</strong> {{ data.wind_speed }} m/s</p>
+    {% if city %}
+        <h2>Weather in {{ city }}</h2>
+    {% endif %}
 
-        <h2>Air Quality Index (AQI)</h2>
-        <p><strong>AQI Value:</strong> {{ data.aqi_value }}</p>
-        <p><strong>AQI Description:</strong> {{ data.aqi_description }}</p>
-        <p><strong>PM2.5:</strong> {{ data.pm2_5 }} µg/m³</p>
-        <p><strong>PM10:</strong> {{ data.pm10 }} µg/m³</p>
-    {% elif data and data.error %}
-        <p style="color: red;">Error: {{ data.error }}</p>
-        <p>Possible reasons:</p>
-        <ul>
-            <li>Invalid city name</li>
-            <li>Issues with the API</li>
-            <li>Network connectivity problems</li>
-        </ul>
+    {% if data and not data.error %}
+        <h3>Weather Details:</h3>
+        <p>Weather: {{ data.weather }}</p>
+        <p>Temperature: {{ data.temp }}°C</p>
+        <p>Feels Like: {{ data.feels_like }}°C</p>
+        <p>Min Temperature: {{ data.min_temp }}°C</p>
+        <p>Max Temperature: {{ data.max_temp }}°C</p>
+        <p>Pressure: {{ data.pressure }} hPa</p>
+        <p>Humidity: {{ data.humidity }}%</p>
+        <p>Wind Speed: {{ data.wind_speed }} m/s</p>
+        <p>Visibility: {{ data.visibility }} km</p>
+        <p>Sunrise: {{ data.sunrise }}</p>
+        <p>Sunset: {{ data.sunset }}</p>
+
+        <h3>Air Quality Details:</h3>
+        <p>Air Quality Index: {{ data.aqi }} ({{ data.aqi_description }})</p>
+        <p>PM2.5: {{ data.pm2_5 }} µg/m³</p>
+        <p>PM10: {{ data.pm10 }} µg/m³</p>
+    {% elif data.error %}
+        <h2>Error: {{ data.error }}</h2>
     {% endif %}
 </body>
 </html>
